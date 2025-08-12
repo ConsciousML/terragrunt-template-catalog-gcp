@@ -8,7 +8,7 @@ locals {
 }
 
 terraform {
-  source = "${get_path_to_repo_root()}//modules/vpc"
+  source = "git::git@github.com:ConsciousML/terragrunt-template-stack-gcp.git//modules/vpc?ref=first-gcp-resources"
 }
 
 dependency "apis" {
