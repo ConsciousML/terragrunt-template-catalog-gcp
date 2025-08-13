@@ -1,3 +1,3 @@
 locals {
-    project = "main-project-468812"
+  project = "main-project-468812"
 }

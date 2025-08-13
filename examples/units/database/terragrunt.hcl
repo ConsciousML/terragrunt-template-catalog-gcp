@@ -12,7 +12,7 @@ terraform {
 }
 
 dependency "apis" {
-  config_path = "../apis"
+  config_path  = "../apis"
   skip_outputs = true
 }
 
@@ -21,7 +21,7 @@ dependency "vpc" {
   mock_outputs = {
     network_self_link = "projects/main-project-468812/global/networks/mock-vpc"
   }
-   = ["init", "plan", "validate"]
+  mock_outputs_allowed_terraform_commands = ["init", "plan", "validate", "destroy"]
 }
 
 inputs = {

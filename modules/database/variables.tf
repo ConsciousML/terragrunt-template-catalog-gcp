@@ -35,7 +35,7 @@ variable "ipv4_enabled" {
 variable "private_network" {
   description = "Private network self link"
   type        = string
-  default = null
+  default     = null
 }
 
 variable "authorized_network_name" {

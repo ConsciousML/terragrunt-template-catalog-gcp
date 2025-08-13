@@ -10,23 +10,23 @@ locals {
 
   # Extract the variables we need for easy access
   gcp_project = local.project_vars.locals.project
-  gcp_region   = local.region_vars.locals.region
-  environment   = local.environment_vars.locals.environment
+  gcp_region  = local.region_vars.locals.region
+  environment = local.environment_vars.locals.environment
 }
 
 remote_state {
   backend = "gcs"
   generate = {
-    path = "backend.tf"
+    path      = "backend.tf"
     if_exists = "overwrite_terragrunt"
   }
   config = {
 
-    project = "${local.gcp_project}"
+    project  = "${local.gcp_project}"
     location = "eu"
 
     bucket = "${local.gcp_project}-tofu-state-${local.environment}"
-    prefix   = "${path_relative_to_include()}/tofu.tfstate"
+    prefix = "${path_relative_to_include()}/tofu.tfstate"
     gcs_bucket_labels = {
       owner = "terragrunt"
       name  = "tofu_state_storage"
@@ -35,9 +35,9 @@ remote_state {
 }
 
 generate "provider" {
-  path = "providers.tf"
+  path      = "providers.tf"
   if_exists = "overwrite"
-  contents = <<EOF
+  contents  = <<EOF
 provider "google" {
   project = "${local.gcp_project}"
   region = "${local.gcp_region}"
@@ -46,9 +46,9 @@ EOF
 }
 
 generate "versions" {
-  path = "versions.tf"
+  path      = "versions.tf"
   if_exists = "overwrite"
-  contents = <<EOF
+  contents  = <<EOF
 terraform {
   required_providers {
     google = {
