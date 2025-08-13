@@ -35,7 +35,7 @@ jobs:
 
       - name: Run Terragrunt stack generate and plan
         run: |
-          cd examples/stacks/foo-bar-local
+          cd examples/stacks/vpc-db/local
           terragrunt stack generate
           terragrunt stack run plan
 
