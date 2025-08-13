@@ -25,7 +25,7 @@ remote_state {
     project = "${local.gcp_project}"
     location = "eu"
 
-    bucket = "tofu-state-${local.environment}"
+    bucket = "${local.gcp_project}-tofu-state-${local.environment}"
     prefix   = "${path_relative_to_include()}/tofu.tfstate"
     gcs_bucket_labels = {
       owner = "terragrunt"
