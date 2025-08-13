@@ -25,9 +25,20 @@ remote_state {
 
 # Configure the GCP provider
 generate "provider" {
-  path = "provider.tf"
-  if_exists = "overwrite_terragrunt"
+  path = "provider_google.tf"
+  if_exists = "overwrite"
   contents = <<EOF
+terraform {
+  required_providers {
+    google = {
+      source  = "hashicorp/google"
+      version = "~> v6.48.0"
+    }
+  }
+
+  required_version = ">= 1.9.1"
+}
+
 provider "google" {
   project = "${local.gcp_project}"
   region = "${local.gcp_region}"
