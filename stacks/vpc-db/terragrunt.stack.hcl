@@ -1,10 +1,10 @@
 unit "apis" {
-  source = "git::git@github.com:ConsciousML/terragrunt-template-stack-gcp.git//units/apis?ref=first-gcp-resources"
+  source = "git::git@github.com:ConsciousML/terragrunt-template-catalog-gcp.git//units/apis?ref=first-gcp-resources"
   path   = "apis"
 }
 
 unit "vpc" {
-  source = "git::git@github.com:ConsciousML/terragrunt-template-stack-gcp.git//units/vpc?ref=first-gcp-resources"
+  source = "git::git@github.com:ConsciousML/terragrunt-template-catalog-gcp.git//units/vpc?ref=first-gcp-resources"
   path   = "vpc"
   
   values = {
@@ -16,7 +16,7 @@ unit "vpc" {
 }
 
 unit "database" {
-  source = "git::git@github.com:ConsciousML/terragrunt-template-stack-gcp.git//units/database?ref=first-gcp-resources"
+  source = "git::git@github.com:ConsciousML/terragrunt-template-catalog-gcp.git//units/database?ref=first-gcp-resources"
   path   = "database"
   
   values = {

@@ -3,5 +3,5 @@ include "root" {
 }
 
 terraform {
-  source = "git::git@github.com:ConsciousML/terragrunt-template-stack-gcp.git//modules/apis?ref=first-gcp-resources"
+  source = "git::git@github.com:ConsciousML/terragrunt-template-catalog-gcp.git//modules/apis?ref=first-gcp-resources"
 }
