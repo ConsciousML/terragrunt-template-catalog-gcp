@@ -10,7 +10,7 @@ unit "apis" {
 unit "vpc" {
   source = "${local.repo_root}/examples/units/vpc"
   path   = "vpc"
-  
+
   values = {
     network_name = "vpc"
     subnet_name  = "subnet"
@@ -22,7 +22,7 @@ unit "vpc" {
 unit "database" {
   source = "${local.repo_root}/examples/units/database"
   path   = "database"
-  
+
   values = {
     instance_name    = "cloudsql-postgres"
     database_version = "POSTGRES_15"

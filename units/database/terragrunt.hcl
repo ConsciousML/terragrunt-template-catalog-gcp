@@ -12,7 +12,7 @@ terraform {
 }
 
 dependency "apis" {
-  config_path = "../apis"
+  config_path  = "../apis"
   skip_outputs = true
 }
 
