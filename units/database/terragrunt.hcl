@@ -8,7 +8,7 @@ locals {
 }
 
 terraform {
-  source = "git::git@github.com:ConsciousML/terragrunt-template-catalog-gcp.git//modules/database?ref=first-gcp-resources"
+  source = "git::git@github.com:ConsciousML/terragrunt-template-catalog-gcp.git//modules/database?"
 }
 
 dependency "apis" {
