@@ -1,5 +1,5 @@
 stack "vpc-db" {
-  source = "github.com/ConsciousML/terragrunt-template-stack-gcp//stacks/vpc-db?ref=first-gcp-resources"
+  source = "github.com/ConsciousML/terragrunt-template-catalog-gcp//stacks/vpc-db?ref=first-gcp-resources"
   path   = "infrastructure"
 
   values = {
