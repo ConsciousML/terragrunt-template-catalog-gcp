@@ -1,9 +1,11 @@
+# Warning: to test a stack on a branch, remember to change `ref=main` to `ref=YOUR_BRANCH`
+# and `version = YOUR_BRANCH`
 stack "vpc-db" {
-  source = "github.com/ConsciousML/terragrunt-template-catalog-gcp//stacks/vpc-db?ref=first-gcp-resources"
+  source = "github.com/ConsciousML/terragrunt-template-catalog-gcp//stacks/vpc-db?ref=main"
   path   = "infrastructure"
 
   values = {
-    version = "first-gcp-resources"
+    version = "main"
     network_name     = "vpc"
     subnet_name      = "subnet"
     subnet_cidr      = "10.0.0.0/24"
