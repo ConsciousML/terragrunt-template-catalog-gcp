@@ -9,7 +9,7 @@ gh api \
   --method PUT \
   -H "Accept: application/vnd.github+json" \
   /repos/$REPO/branches/main/protection \
-  --input protection_rules/main_rules_no_approval.json
+  --input protection_rules/main_rules_with_approval.json
 ```
 
 If you code alone and want to disable approvals on PR:
@@ -18,5 +18,5 @@ gh api \
   --method PUT \
   -H "Accept: application/vnd.github+json" \
   /repos/$REPO/branches/main/protection \
-  --input protection_rules/main_rules_with_approval.json
+  --input protection_rules/main_rules_no_approval.json
 ```
