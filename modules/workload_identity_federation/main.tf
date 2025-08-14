@@ -29,6 +29,9 @@ resource "google_iam_workload_identity_pool_provider" "github" {
   oidc {
     issuer_uri = "https://token.actions.githubusercontent.com"
   }
+
+  # Condition to restrict access to specific repository
+  attribute_condition = "assertion.repository == \"${var.github_username}/${var.github_repo_name}\""
 }
 
 # Create a service account dedicated for GitHub Workflows
