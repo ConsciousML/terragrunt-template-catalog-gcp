@@ -8,7 +8,7 @@ locals {
 }
 
 terraform {
-  source = "${get_path_to_repo_root()}//modules/workload_identity_federation/?ref=${values.version}"
+  source = "git::git@github.com:ConsciousML/terragrunt-template-catalog-gcp.git//modules/workload_identity_federation/?ref=${values.version}"
 }
 
 dependency "apis" {

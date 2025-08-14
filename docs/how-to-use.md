@@ -13,3 +13,5 @@ terragrunt stack run validate
 terragrunt stack run plan
 terragrunt stack run apply
 ```
+
+Once it works, in `units/example` replace terraform source by the github url with value.
