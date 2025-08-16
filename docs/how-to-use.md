@@ -1,3 +1,4 @@
+# Develop a new module
 Suppose we want to add a module named `example`.
 First, use relative path for terraform source.
 
@@ -16,7 +17,9 @@ terragrunt stack run apply
 
 Once it works, in `units/example` replace terraform source by the github url with value.
 
-**Troubleshoot**:
+# Enable GitHub Actions to run Terragrunt
+
+# Troubleshoot
 if you face an error:
 ```bash
 Error: Error creating WorkloadIdentityPool: googleapi: Error 409: Requested entity already exists
