@@ -8,6 +8,7 @@ stack "enable_tg_github_actions" {
     github_repo_name = "terragrunt-template-catalog-gcp"
 
     # Set github_token via environment variable: export TF_VAR_github_token="your_token_here"
+    github_token = get_env("TF_VAR_github_token")
 
     # TODO: change version to `main` before merge
     version                      = "first-gcp-resources"
@@ -17,5 +18,5 @@ stack "enable_tg_github_actions" {
     service_account_id           = "gh-actions"
     service_account_display_name = "GitHub Actions Service Account"
     service_account_description  = "Service account for GitHub Actions workflows"
-    }
+  }
 }
