@@ -1,23 +1,21 @@
-locals {
-  version = "first-gcp-resources"
-}
+stack "enable_tg_github_actions" {
+  source = "${get_repo_root()}/stacks/enable-tg-github-actions"
+  path   = "enable_tg_github_actions"
 
-include "catalog" {
-  path = "git::git@github.com:ConsciousML/terragrunt-template-catalog-gcp.git//stacks/enable-tg-github-actions/terragrunt.stack.hcl?ref=${local.version}"
-}
+  values = {
+    # Change these values
+    github_username  = "ConsciousML"
+    github_repo_name = "terragrunt-template-catalog-gcp"
 
-values = {
-  # Change these values
-  github_username  = "ConsciousML"
-  github_repo_name = "terragrunt-template-catalog-gcp"
+    # Set github_token via environment variable: export TF_VAR_github_token="your_token_here"
 
-  # Default values
-  version                      = local.version
-  workload_identity_pool_id    = "github-pool-oidc"
-  display_name                 = "GitHub pool"
-  description                  = "Identity pool for GitHub deployments"
-  service_account_id           = "github-actions"
-  service_account_display_name = "GitHub Actions Service Account"
-  service_account_description  = "Service account for GitHub Actions workflows"
-
+    # TODO: change version to `main` before merge
+    version                      = "first-gcp-resources"
+    workload_identity_pool_id    = "gh-pool"
+    display_name                 = "GitHub pool"
+    description                  = "Identity pool for GitHub deployments"
+    service_account_id           = "gh-actions"
+    service_account_display_name = "GitHub Actions Service Account"
+    service_account_description  = "Service account for GitHub Actions workflows"
+    }
 }
