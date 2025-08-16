@@ -19,3 +19,9 @@ values = {
   ...
 }
 ```
+
+Then run the stack:
+```bash
+cd bootstrap/enable-tg-github-actions/
+terragrunt stack run apply
+```
