@@ -1,10 +1,16 @@
 locals {
   repo_root = get_repo_root()
-  version   = "first-gcp-resources"
+
+  version = coalesce(
+    get_env("GITHUB_HEAD_REF", ""), # PR branch name (only set in PRs)
+    get_env("GITHUB_REF_NAME", ""), # Branch/tag name
+    try(run_cmd("git", "rev-parse", "--abbrev-ref", "HEAD"), ""),
+    "main" # fallback
+  )
 }
 
 unit "apis" {
-  source = "${local.repo_root}/examples/units/apis"
+  source = "${local.repo_root}/units/apis"
   path   = "apis"
 
   values = {
@@ -13,7 +19,7 @@ unit "apis" {
 }
 
 unit "vpc" {
-  source = "${local.repo_root}/examples/units/vpc"
+  source = "${local.repo_root}/units/vpc"
   path   = "vpc"
 
   values = {
@@ -26,7 +32,7 @@ unit "vpc" {
 }
 
 unit "gce" {
-  source = "${local.repo_root}/examples/units/gce"
+  source = "${local.repo_root}/units/gce"
   path   = "gce"
 
   values = {
