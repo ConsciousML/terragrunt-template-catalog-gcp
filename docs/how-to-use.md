@@ -36,6 +36,7 @@ workload_identity_pool_id          = "YOUR_WIP_ID"
 Declare the `WIP_ID` environment varialbe by replacing `{{YOUR_WIP_ID}}`:
 ```bash
 export WIP_ID={{YOUR_WIP_ID}}
+export PROVIDER_ID=github-provider
 ```
 
 Then run:
@@ -61,6 +62,8 @@ export PROJECT_NAME=$(gcloud config get-value project)
 Import the pool into Terraform state:
 ```bash
 terragrunt import google_iam_workload_identity_pool.github_pool projects/$PROJECT_NAME/locations/global/workloadIdentityPools/$WIP_ID
+
+terragrunt import google_iam_workload_identity_pool_provider.github projects/$PROJECT_NAME/locations/global/workloadIdentityPools/$WIP_ID/providers/$PROVIDER_ID
 ```
 
 Go back to the root of your stack and run:
