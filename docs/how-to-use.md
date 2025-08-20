@@ -33,10 +33,9 @@ In the trace, under `google_iam_workload_identity_pool_provider.github` find the
 workload_identity_pool_id          = "YOUR_WIP_ID"
 ```
 
-Declare a variables for convenience, replace `{{YOUR_WIP_ID}}`:
+Declare the `WIP_ID` environment varialbe by replacing `{{YOUR_WIP_ID}}`:
 ```bash
 export WIP_ID={{YOUR_WIP_ID}}
-export PROJECT_NUMBER=$(gcloud projects describe $(gcloud config get-value project) --format="value(projectNumber)")
 ```
 
 Then run:
@@ -49,9 +48,19 @@ gcloud iam workload-identity-pools undelete $WIP_ID --location=global
 cd .terragrunt-stack/workload_identity_federation/
 ```
 
+The wip unit can be deeper in the tree if you use `stacks`:
+```bash
+cd .terragrunt-stack/enable_tg_github_actions/.terragrunt-stack/workload_identity_federation
+```
+
+Declare the `PROJECT_NUMBER` variable:
+```bash
+export PROJECT_NAME=$(gcloud config get-value project)
+```
+
 Import the pool into Terraform state:
 ```bash
-terragrunt import google_iam_workload_identity_pool.github_pool projects/$PROJECT_NUMBER/locations/global/workloadIdentityPools/$WIP_ID
+terragrunt import google_iam_workload_identity_pool.github_pool projects/$PROJECT_NAME/locations/global/workloadIdentityPools/$WIP_ID
 ```
 
 Go back to the root of your stack and run:
