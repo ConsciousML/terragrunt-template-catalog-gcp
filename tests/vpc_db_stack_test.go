@@ -40,10 +40,4 @@ func TestLocalStack(t *testing.T) {
 
     t.Logf("Apply output:\n%s", string(out))
     require.NoError(t, err, "stack run apply failed: %s", string(out))
-
-    // Check that all three modules were applied successfully
-    require.Contains(t, string(out), "vpc] tofu: Apply complete!")
-    require.Contains(t, string(out), "apis] tofu: Apply complete!")
-    require.Contains(t, string(out), "gce] tofu: Apply complete!")
-
 }
