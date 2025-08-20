@@ -51,6 +51,7 @@ jobs:
         run: |
           cd examples/stacks/vpc-db/local
           terragrunt stack generate
+          terragrunt stack run init --backend-bootstrap
           terragrunt stack run plan
 
       - name: Check if PR has 'run-terratest' label
