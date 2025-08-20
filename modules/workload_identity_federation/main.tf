@@ -41,8 +41,14 @@ resource "google_service_account" "github_actions" {
   description  = var.service_account_description
 }
 
-resource "google_service_account_iam_member" "workload_identity_user" {
+locals {
+  all_iam_roles = concat(["roles/iam.workloadIdentityUser"], var.iam_roles)
+}
+
+resource "google_service_account_iam_member" "workload_identity_bindings" {
+  for_each = toset(local.all_iam_roles)
+
   service_account_id = "projects/${var.project}/serviceAccounts/${google_service_account.github_actions.email}"
-  role               = "roles/iam.workloadIdentityUser"
+  role               = each.value
   member             = "principalSet://iam.googleapis.com/${google_iam_workload_identity_pool.github_pool.name}/attribute.repository/${var.github_username}/${var.github_repo_name}"
 }
