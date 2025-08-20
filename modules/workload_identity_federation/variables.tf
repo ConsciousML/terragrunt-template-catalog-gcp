@@ -42,3 +42,9 @@ variable "github_repo_name" {
   description = "GitHub repository name"
   type        = string
 }
+
+variable "iam_roles" {
+  description = "Additional IAM roles to assign to the service account (roles/iam.workloadIdentityUser is always included)"
+  type        = list(string)
+  default     = []
+}

@@ -25,4 +25,5 @@ inputs = {
   service_account_description  = values.service_account_description
   github_username              = values.github_username
   github_repo_name             = values.github_repo_name
+  iam_roles                    = values.iam_roles
 }
