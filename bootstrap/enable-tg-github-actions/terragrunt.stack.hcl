@@ -1,3 +1,12 @@
+locals {
+  version = coalesce(
+    get_env("GITHUB_HEAD_REF", ""), # PR branch name (only set in PRs)
+    get_env("GITHUB_REF_NAME", ""), # Branch/tag name
+    try(run_cmd("git", "rev-parse", "--abbrev-ref", "HEAD"), ""),
+    "main" # fallback
+  )
+}
+
 stack "enable_tg_github_actions" {
   source = "${get_repo_root()}/stacks/enable-tg-github-actions"
   path   = "enable_tg_github_actions"
@@ -11,7 +20,7 @@ stack "enable_tg_github_actions" {
     github_token = get_env("TF_VAR_github_token")
 
     # TODO: change version to `main` before merge
-    version = "first-gcp-resources"
+    version = local.version
 
     # Workload Identity Federation configuration
     wif_pool_id                      = "gh-pool"
