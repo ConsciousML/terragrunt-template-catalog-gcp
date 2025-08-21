@@ -29,6 +29,14 @@ stack "enable_tg_github_actions" {
     wif_service_account_id           = "gh-actions"
     wif_service_account_display_name = "GitHub Actions Service Account"
     wif_service_account_description  = "Service account for GitHub Actions workflows"
+    wif_iam_roles = [
+      "roles/viewer",                          # Basic read access to all resources
+      "roles/storage.admin",                   # Full access to Cloud Storage (for Terraform state)
+      "roles/compute.networkAdmin",            # Create/manage VPCs, subnets, global addresses
+      "roles/compute.instanceAdmin.v1",        # Create/manage GCE instances
+      "roles/servicenetworking.networksAdmin", # Create private service connections
+      "roles/serviceusage.serviceUsageAdmin"   # Enable/disable GCP APIs
+    ]
 
     # GitHub Secrets configuration
     github_secrets_repo_name = "terragrunt-template-catalog-gcp"

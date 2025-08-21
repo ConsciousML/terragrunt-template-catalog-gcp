@@ -21,7 +21,7 @@ unit "workload_identity_federation" {
     service_account_description  = values.wif_service_account_description
     github_username              = values.github_username
     github_repo_name             = values.github_repo_name
-    iam_roles                    = ["roles/viewer", "roles/storage.admin"]
+    iam_roles                    = values.wif_iam_roles
   }
 }
 
