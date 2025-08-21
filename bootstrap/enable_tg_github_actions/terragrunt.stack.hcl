@@ -8,7 +8,7 @@ locals {
 }
 
 stack "enable_tg_github_actions" {
-  source = "${get_repo_root()}/stacks/enable-tg-github-actions"
+  source = "${get_repo_root()}/stacks/enable_tg_github_actions"
   path   = "enable_tg_github_actions"
 
   values = {
