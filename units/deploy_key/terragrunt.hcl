@@ -7,8 +7,9 @@ terraform {
 }
 
 inputs = {
-  github_token     = values.github_token
-  repositories     = values.repositories
-  secret_name      = values.secret_name
-  deploy_key_title = values.deploy_key_title
+  github_token       = values.github_token
+  repositories       = values.repositories
+  secret_names       = values.secret_names
+  current_repository = values.current_repository
+  deploy_key_title   = values.deploy_key_title
 }
