@@ -10,7 +10,7 @@ import (
 func TestLocalStack(t *testing.T) {
     t.Parallel()
 
-    stackDir := "../examples/stacks/vpc_gce/local"
+    stackDir := "../examples/stacks/vpc_gce"
 
     // Ensure destroy runs at the end, even if the test fails
     t.Cleanup(func() {
