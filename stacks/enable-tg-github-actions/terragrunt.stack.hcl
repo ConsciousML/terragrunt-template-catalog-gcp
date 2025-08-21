@@ -13,12 +13,12 @@ unit "workload_identity_federation" {
 
   values = {
     version                      = values.version
-    workload_identity_pool_id    = values.workload_identity_pool_id
-    display_name                 = values.display_name
-    description                  = values.description
-    service_account_id           = values.service_account_id
-    service_account_display_name = values.service_account_display_name
-    service_account_description  = values.service_account_description
+    workload_identity_pool_id    = values.wif_pool_id
+    display_name                 = values.wif_display_name
+    description                  = values.wif_description
+    service_account_id           = values.wif_service_account_id
+    service_account_display_name = values.wif_service_account_display_name
+    service_account_description  = values.wif_service_account_description
     github_username              = values.github_username
     github_repo_name             = values.github_repo_name
     iam_roles                    = ["roles/viewer", "roles/storage.admin"]
@@ -32,6 +32,19 @@ unit "github_secrets" {
   values = {
     version          = values.version
     github_token     = values.github_token
-    github_repo_name = values.github_repo_name
+    github_repo_name = values.github_secrets_repo_name
+  }
+}
+
+unit "deploy_key" {
+  source = "git::git@github.com:ConsciousML/terragrunt-template-catalog-gcp.git//units/deploy_key?ref=${values.version}"
+  path   = "deploy_key"
+
+  values = {
+    version          = values.version
+    github_token     = values.github_token
+    repositories     = values.deploy_key_repositories
+    secret_name      = values.deploy_key_secret_name
+    deploy_key_title = values.deploy_key_title
   }
 }

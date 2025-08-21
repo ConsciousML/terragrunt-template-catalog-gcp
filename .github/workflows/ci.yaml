@@ -68,11 +68,6 @@ jobs:
           PR_NUMBER: ${{ github.event.pull_request.number }} 
           GH_TOKEN: ${{ github.token }}
 
-      - name: Setup SSH for public repos
-        run: |
-          mkdir -p ~/.ssh
-          ssh-keyscan github.com >> ~/.ssh/known_hosts
-
       # Run Terratest only if label present
       - name: Run Terratest
         run: go test -v ./tests/... -timeout 30m
