@@ -59,10 +59,10 @@ jobs:
       - name: Run pre-commit hooks
         uses: pre-commit/action@v3.0.1
 
-      # Generates the `vpc-db` stack and runs plan
+      # Generates the `vpc_db` stack and runs plan
       - name: Run Terragrunt stack generate and plan
         run: |
-          cd examples/stacks/vpc-db/local
+          cd examples/stacks/vpc_db/local
           terragrunt stack generate
           terragrunt stack run plan --backend-bootstrap --non-interactive
 
