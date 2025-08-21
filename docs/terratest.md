@@ -8,7 +8,7 @@ Copy `tests/vpc_db_stack_test.go` in the `test` directory. Use the suffix `*_tes
 
 Next, change the stack directory to the path of the stack you want to test:
 ```go
-stackDir := "../examples/stacks/vpc_db/local"
+stackDir := "../examples/stacks/vpc_gce/"
 ```
 
 Finally, write additional tests steps. For example, you can perform health checks or make a request to an API to ensure your infrastructure was deployed properly.
@@ -18,7 +18,7 @@ Creating an `examples` folder is a best practice to provide complete Terraform c
 
 This makes testing easier and helps others understand how to use the module.
 
-In our case, the `examples/stacks/vpc_db/local` configuration calls the `stacks/vpc_db` in the `example` folder so it uses all the `.hcl` files in this directory.
+In our case, the `examples/stacks/vpc_gce/` configuration calls the `stacks/vpc_gce` in the `example` folder so it uses all the `.hcl` files in this directory.
 
 This as the benefit to use environment variables specific to an `example` environment.
 

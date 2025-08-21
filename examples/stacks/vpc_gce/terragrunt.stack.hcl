@@ -8,7 +8,7 @@ locals {
 }
 
 stack "vpc_gce" {
-  source = "${get_repo_root()}/stacks/vpc_gce"
+  source = "github.com/ConsciousML/terragrunt-template-catalog-gcp//stacks/vpc_gce?ref=${local.version}"
   path   = "infrastructure"
 
   values = {
