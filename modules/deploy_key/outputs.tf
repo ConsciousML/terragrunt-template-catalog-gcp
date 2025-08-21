@@ -1,6 +1,8 @@
-output "public_key" {
-  description = "The public key for the deploy key"
-  value       = tls_private_key.deploy_key.public_key_openssh
+output "public_keys" {
+  description = "Map of repository names to public keys"
+  value = {
+    for repo in var.repositories : repo => tls_private_key.deploy_key[repo].public_key_openssh
+  }
 }
 
 output "deploy_key_ids" {
@@ -8,4 +10,9 @@ output "deploy_key_ids" {
   value = {
     for repo, key in github_repository_deploy_key.deploy_key : repo => key.id
   }
+}
+
+output "secret_names" {
+  description = "List of secret names created for each repository"
+  value       = var.secret_names
 }

@@ -20,7 +20,7 @@ unit "workload_identity_federation" {
     service_account_display_name = values.wif_service_account_display_name
     service_account_description  = values.wif_service_account_description
     github_username              = values.github_username
-    github_repo_name             = values.github_repo_name
+    github_repo_name             = values.current_repository
     iam_roles                    = values.wif_iam_roles
   }
 }
@@ -32,7 +32,7 @@ unit "github_secrets" {
   values = {
     version          = values.version
     github_token     = values.github_token
-    github_repo_name = values.github_secrets_repo_name
+    github_repo_name = values.current_repository
   }
 }
 
@@ -41,10 +41,11 @@ unit "deploy_key" {
   path   = "deploy_key"
 
   values = {
-    version          = values.version
-    github_token     = values.github_token
-    repositories     = values.deploy_key_repositories
-    secret_name      = values.deploy_key_secret_name
-    deploy_key_title = values.deploy_key_title
+    version            = values.version
+    github_token       = values.github_token
+    repositories       = values.deploy_key_repositories
+    secret_names       = values.deploy_key_secret_names
+    current_repository = values.current_repository
+    deploy_key_title   = values.deploy_key_title
   }
 }

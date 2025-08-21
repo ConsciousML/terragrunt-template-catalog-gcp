@@ -9,10 +9,14 @@ variable "repositories" {
   type        = list(string)
 }
 
-variable "secret_name" {
-  description = "Name of the GitHub Actions secret to store the deploy key"
+variable "secret_names" {
+  description = "List of GitHub Actions secret names to store each deploy key (must match order of repositories)"
+  type        = list(string)
+}
+
+variable "current_repository" {
+  description = "Name of the current repository where secrets will be stored"
   type        = string
-  default     = "DEPLOY_KEY"
 }
 
 variable "deploy_key_title" {

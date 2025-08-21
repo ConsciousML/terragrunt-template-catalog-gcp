@@ -13,8 +13,8 @@ stack "enable_tg_github_actions" {
 
   values = {
     # Change these values
-    github_username  = "ConsciousML"
-    github_repo_name = "terragrunt-template-catalog-gcp"
+    github_username    = "ConsciousML"
+    current_repository = "terragrunt-template-catalog-gcp"
 
     # Set github_token via environment variable: export TF_VAR_github_token="your_token_here"
     github_token = get_env("TF_VAR_github_token")
@@ -39,12 +39,9 @@ stack "enable_tg_github_actions" {
       "roles/iam.serviceAccountUser"           # Use default Compute Engine service account
     ]
 
-    # GitHub Secrets configuration
-    github_secrets_repo_name = "terragrunt-template-catalog-gcp"
-
     # Deploy key configuration
     deploy_key_repositories = ["terragrunt-template-catalog-gcp"]
-    deploy_key_secret_name  = "DEPLOY_KEY"
-    deploy_key_title        = "Terragrunt Deploy Key"
+    deploy_key_secret_names = ["DEPLOY_KEY_TG_CATALOG"]
+    deploy_key_title        = "Terragrunt Catalog Deploy Key"
   }
 }
