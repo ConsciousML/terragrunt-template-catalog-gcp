@@ -1,6 +1,4 @@
 locals {
-  repo_root = get_repo_root()
-
   version = coalesce(
     get_env("GITHUB_HEAD_REF", ""), # PR branch name (only set in PRs)
     get_env("GITHUB_REF_NAME", ""), # Branch/tag name
@@ -9,34 +7,16 @@ locals {
   )
 }
 
-unit "apis" {
-  source = "${local.repo_root}/units/apis"
-  path   = "apis"
-
-  values = {
-    version = local.version
-  }
-}
-
-unit "vpc" {
-  source = "${local.repo_root}/units/vpc"
-  path   = "vpc"
-
-  values = {
-    version      = local.version
-    network_name = "vpc"
-    subnet_name  = "subnet"
-    subnet_cidr  = "10.0.0.0/24"
-    region       = "europe-west1"
-  }
-}
-
-unit "gce" {
-  source = "${local.repo_root}/units/gce"
-  path   = "gce"
+stack "vpc_gce" {
+  source = "${get_repo_root()}/stacks/vpc_gce"
+  path   = "infrastructure"
 
   values = {
     version                = local.version
+    network_name           = "vpc"
+    subnet_name            = "subnet"
+    subnet_cidr            = "10.0.0.0/24"
+    region                 = "europe-west1"
     instance_name          = "example-instance"
     machine_type           = "e2-micro"
     zone                   = "europe-west1-b"
