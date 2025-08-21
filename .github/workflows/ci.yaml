@@ -24,15 +24,25 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      # Use deploy key for Terragrunt to pull private repositories
+      - uses: webfactory/ssh-agent@v0.9.0
+        with:
+          ssh-private-key: ${{ secrets.DEPLOY_KEY }}
+
+      # Use Workflow Identity Federation to authenticate GitHub Actions with Google
+      # Terragrunt needs permissions from GCP to run plan and apply
       - uses: 'google-github-actions/auth@v2'
         with:
           project_id: ${{ secrets.PROJECT_ID }}
           workload_identity_provider: ${{ secrets.WIF_PROVIDER }}
           service_account: ${{ secrets.WIF_SERVICE_ACCOUNT }}
 
+      # Install the gcloud SDK
       - name: 'Set up Cloud SDK'
         uses: 'google-github-actions/setup-gcloud@v2'
 
+      # Mise enable to install all the tools we need (Terragrunt, OpenTofu, Go, ...)
+      # See `mise.toml`.
       - name: Install mise
         uses: jdx/mise-action@v2.2.3
 
@@ -44,15 +54,20 @@ jobs:
       - name: Install pre-commit
         run: pip install pre-commit
 
+      # Runs the checks as in pre-commits (tflint, ...)
+      # This prevents any discrepancies between the pre-commit checks and the CI checks 
       - name: Run pre-commit hooks
         uses: pre-commit/action@v3.0.1
 
+      # Generates the `vpc-db` stack and runs plan
       - name: Run Terragrunt stack generate and plan
         run: |
           cd examples/stacks/vpc-db/local
           terragrunt stack generate
           terragrunt stack run plan --backend-bootstrap --non-interactive
 
+      # Fails if the `run-terratest` label is not present on the PR
+      # This allows to skip the "long" infrastructure tests when the PR is still not ready
       - name: Check if PR has 'run-terratest' label
         id: check_label
         run: |
@@ -68,6 +83,7 @@ jobs:
           PR_NUMBER: ${{ github.event.pull_request.number }} 
           GH_TOKEN: ${{ github.token }}
 
-      # Run Terratest only if label present
+      # Tests that the infrastructure can deploy properly
+      # It destroys it automatically
       - name: Run Terratest
         run: go test -v ./tests/... -timeout 30m
