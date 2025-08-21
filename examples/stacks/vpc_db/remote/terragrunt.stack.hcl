@@ -1,7 +1,7 @@
 # Warning: to test a stack on a branch, remember to change `ref=main` to `ref=YOUR_BRANCH`
 # and `version = YOUR_BRANCH`
-stack "vpc-db" {
-  source = "github.com/ConsciousML/terragrunt-template-catalog-gcp//stacks/vpc-db?ref=main"
+stack "vpc_db" {
+  source = "github.com/ConsciousML/terragrunt-template-catalog-gcp//stacks/vpc_db?ref=main"
   path   = "infrastructure"
 
   values = {
