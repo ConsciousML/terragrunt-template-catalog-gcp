@@ -10,7 +10,7 @@ Get a fine-graind GH token and add it to your environent:
 export TF_VAR_github_token="$(gh auth token)"
 ```
 
-In `bootstrap/enable-tg-github-actions/terragrunt.stack.hcl` change the follwoing:
+In `bootstrap/enable_tg_github_actions/terragrunt.stack.hcl` change the follwoing:
 ```hcl
 values = {
   # Change these values
@@ -22,6 +22,6 @@ values = {
 
 Then run the stack:
 ```bash
-cd bootstrap/enable-tg-github-actions/
+cd bootstrap/enable_tg_github_actions/
 terragrunt stack run apply
 ```
