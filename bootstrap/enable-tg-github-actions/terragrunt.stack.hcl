@@ -35,7 +35,8 @@ stack "enable_tg_github_actions" {
       "roles/compute.networkAdmin",            # Create/manage VPCs, subnets, global addresses
       "roles/compute.instanceAdmin.v1",        # Create/manage GCE instances
       "roles/servicenetworking.networksAdmin", # Create private service connections
-      "roles/serviceusage.serviceUsageAdmin"   # Enable/disable GCP APIs
+      "roles/serviceusage.serviceUsageAdmin",  # Enable/disable GCP APIs
+      "roles/iam.serviceAccountUser"           # Use default Compute Engine service account
     ]
 
     # GitHub Secrets configuration
