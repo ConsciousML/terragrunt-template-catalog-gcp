@@ -17,5 +17,5 @@ resource "github_actions_secret" "deploy_key" {
 
   repository      = each.key
   secret_name     = var.secret_name
-  plaintext_value = tls_private_key.deploy_key.private_key_pem
+  plaintext_value = tls_private_key.deploy_key.private_key_openssh
 }
