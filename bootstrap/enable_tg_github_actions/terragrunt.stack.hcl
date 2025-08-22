@@ -16,10 +16,9 @@ stack "enable_tg_github_actions" {
     github_username    = "ConsciousML"
     current_repository = "terragrunt-template-catalog-gcp"
 
-    # Set github_token via environment variable: export TF_VAR_github_token="your_token_here"
+    # Set github_token via environment variable 
     github_token = get_env("TF_VAR_github_token")
 
-    # TODO: change version to `main` before merge
     version = local.version
 
     # Workload Identity Federation configuration
