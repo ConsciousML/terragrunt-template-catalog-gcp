@@ -69,6 +69,32 @@ terragrunt stack generate
 terragrunt stack run apply
 ```
 
+### Update Your GitHub Actions file
+
+Update your `.github/workflows/ci.yaml` to use the correct deploy key secret names:
+
+For single deploy key to match the value in `deploy_key_secret_names`:
+```yaml
+# Change this line:
+ssh-private-key: ${{ secrets.DEPLOY_KEY }}
+```
+
+If using multiple deploy keys:
+```yaml
+- uses: webfactory/ssh-agent@v0.9.0
+  with:
+    ssh-private-key: |
+      ${{ secrets.DEPLOY_KEY_SECRET_NAME_1 }}
+      ${{ secrets.DEPLOY_KEY_SECRET_NAME_2 }}
+```
+
+### Run the CI
+
+1. Create a branch
+2. Commit some changes
+3. Create a PR
+4. The `CI` workflow will run automatically
+
 ## Module Details
 
 This stack instantiates four Terraform modules that work together to run Terragrunt with GitHub Actions.
