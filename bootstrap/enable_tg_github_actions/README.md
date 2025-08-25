@@ -71,21 +71,28 @@ terragrunt stack run apply
 
 ### Update Your GitHub Actions file
 
-Update your `.github/workflows/ci.yaml` to use the correct deploy key secret names:
+Update your `.github/workflows/ci.yaml` to use the correct deploy key secret names in the composite action:
 
-For single deploy key to match the value in `deploy_key_secret_names`:
+For single deploy key:
 ```yaml
-# Change this line:
-ssh-private-key: ${{ secrets.DEPLOY_KEY }}
+- uses: ./.github/actions/setup
+  with:
+    deploy-keys: ${{ secrets.DEPLOY_KEY_SECRET_NAME_1 }}
+    project-id: ${{ secrets.PROJECT_ID }}
+    wif-provider: ${{ secrets.WIF_PROVIDER }}
+    wif-service-account: ${{ secrets.WIF_SERVICE_ACCOUNT }}
 ```
 
-If using multiple deploy keys:
+For multiple deploy keys:
 ```yaml
-- uses: webfactory/ssh-agent@v0.9.0
+- uses: ./.github/actions/setup
   with:
-    ssh-private-key: |
+    deploy-keys: |
       ${{ secrets.DEPLOY_KEY_SECRET_NAME_1 }}
       ${{ secrets.DEPLOY_KEY_SECRET_NAME_2 }}
+    project-id: ${{ secrets.PROJECT_ID }}
+    wif-provider: ${{ secrets.WIF_PROVIDER }}
+    wif-service-account: ${{ secrets.WIF_SERVICE_ACCOUNT }}
 ```
 
 ### Run the CI

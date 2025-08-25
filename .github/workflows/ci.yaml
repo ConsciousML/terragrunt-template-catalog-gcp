@@ -12,7 +12,7 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  CI:
+  validate:
     runs-on: ubuntu-latest
 
     # Required for google-github-actions/auth@v2
@@ -24,40 +24,12 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      # Use deploy key for Terragrunt to pull private repositories
-      - uses: webfactory/ssh-agent@v0.9.0
+      - uses: ./.github/actions/setup
         with:
-          ssh-private-key: ${{ secrets.DEPLOY_KEY_TG_CATALOG }}
-
-      # Use Workflow Identity Federation to authenticate GitHub Actions with Google
-      # Terragrunt needs permissions from GCP to run plan and apply
-      - uses: 'google-github-actions/auth@v2'
-        with:
-          project_id: ${{ secrets.PROJECT_ID }}
-          workload_identity_provider: ${{ secrets.WIF_PROVIDER }}
-          service_account: ${{ secrets.WIF_SERVICE_ACCOUNT }}
-
-      # Install the gcloud SDK
-      - name: 'Set up Cloud SDK'
-        uses: 'google-github-actions/setup-gcloud@v2'
-
-      # Mise enable to install all the tools we need (Terragrunt, OpenTofu, Go, ...)
-      # See `mise.toml`.
-      - name: Install mise
-        uses: jdx/mise-action@v2.2.3
-
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.13.1'
-
-      - name: Install pre-commit
-        run: pip install pre-commit
-
-      # Runs the checks as in pre-commits (tflint, ...)
-      # This prevents any discrepancies between the pre-commit checks and the CI checks 
-      - name: Run pre-commit hooks
-        uses: pre-commit/action@v3.0.1
+          deploy-keys: ${{ secrets.DEPLOY_KEY_TG_CATALOG }}
+          project-id: ${{ secrets.PROJECT_ID }}
+          wif-provider: ${{ secrets.WIF_PROVIDER }}
+          wif-service-account: ${{ secrets.WIF_SERVICE_ACCOUNT }}
 
       # Generates the `vpc_gce` stack and runs plan
       - name: Run Terragrunt stack generate and plan
@@ -65,6 +37,26 @@ jobs:
           cd examples/stacks/vpc_gce
           terragrunt stack generate
           terragrunt stack run plan --backend-bootstrap --non-interactive
+
+  terratest:
+    needs: validate
+    runs-on: ubuntu-latest
+
+    # Required for google-github-actions/auth@v2
+    permissions:
+      contents: 'read'
+      id-token: 'write'
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - uses: ./.github/actions/setup
+        with:
+          deploy-keys: ${{ secrets.DEPLOY_KEY_TG_CATALOG }}
+          project-id: ${{ secrets.PROJECT_ID }}
+          wif-provider: ${{ secrets.WIF_PROVIDER }}
+          wif-service-account: ${{ secrets.WIF_SERVICE_ACCOUNT }}
 
       # Fails if the `run-terratest` label is not present on the PR
       # This allows to skip the "long" infrastructure tests when the PR is still not ready
