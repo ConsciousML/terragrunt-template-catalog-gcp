@@ -48,16 +48,6 @@ jobs:
       id-token: 'write'
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - uses: ./.github/actions/setup
-        with:
-          deploy-keys: ${{ secrets.DEPLOY_KEY_TG_CATALOG }}
-          project-id: ${{ secrets.PROJECT_ID }}
-          wif-provider: ${{ secrets.WIF_PROVIDER }}
-          wif-service-account: ${{ secrets.WIF_SERVICE_ACCOUNT }}
-
       # Fails if the `run-terratest` label is not present on the PR
       # This allows to skip the "long" infrastructure tests when the PR is still not ready
       - name: Check if PR has 'run-terratest' label
@@ -74,6 +64,16 @@ jobs:
         env:
           PR_NUMBER: ${{ github.event.pull_request.number }} 
           GH_TOKEN: ${{ github.token }}
+
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - uses: ./.github/actions/setup
+        with:
+          deploy-keys: ${{ secrets.DEPLOY_KEY_TG_CATALOG }}
+          project-id: ${{ secrets.PROJECT_ID }}
+          wif-provider: ${{ secrets.WIF_PROVIDER }}
+          wif-service-account: ${{ secrets.WIF_SERVICE_ACCOUNT }}
 
       # Tests that the infrastructure can deploy properly
       # It destroys it automatically
