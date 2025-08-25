@@ -27,7 +27,7 @@ jobs:
       # Use deploy key for Terragrunt to pull private repositories
       - uses: webfactory/ssh-agent@v0.9.0
         with:
-          ssh-private-key: ${{ secrets.DEPLOY_KEY }}
+          ssh-private-key: ${{ secrets.DEPLOY_KEY_TG_CATALOG }}
 
       # Use Workflow Identity Federation to authenticate GitHub Actions with Google
       # Terragrunt needs permissions from GCP to run plan and apply
