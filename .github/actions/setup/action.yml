@@ -1,0 +1,49 @@
+name: 'Common Setup'
+description: 'Common setup steps for Terragrunt CI workflows'
+
+inputs:
+  deploy-keys:
+    description: 'SSH private keys for deploy key access (can be multiple keys separated by newlines)'
+    required: true
+  project-id:
+    description: 'GCP project ID'
+    required: true
+  wif-provider:
+    description: 'Workload Identity Federation provider'
+    required: true
+  wif-service-account:
+    description: 'Workload Identity Federation service account'
+    required: true
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    # Use deploy key for Terragrunt to pull private repositories
+    - uses: webfactory/ssh-agent@v0.9.0
+      with:
+        ssh-private-key: ${{ inputs.deploy-keys }}
+
+    # Use Workflow Identity Federation to authenticate GitHub Actions with Google
+    # Terragrunt needs permissions from GCP to run plan and apply
+    - uses: 'google-github-actions/auth@v2'
+      with:
+        project_id: ${{ inputs.project-id }}
+        workload_identity_provider: ${{ inputs.wif-provider }}
+        service_account: ${{ inputs.wif-service-account }}
+
+    # Install the gcloud SDK
+    - name: 'Set up Cloud SDK'
+      uses: 'google-github-actions/setup-gcloud@v2'
+
+    # Mise enable to install all the tools we need (Terragrunt, OpenTofu, Go, ...)
+    # See `mise.toml`.
+    - name: Install mise
+      uses: jdx/mise-action@v2.2.3
+
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.13.1'
