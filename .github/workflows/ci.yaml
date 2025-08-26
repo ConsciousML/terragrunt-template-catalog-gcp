@@ -7,8 +7,10 @@ on:
   workflow_dispatch:
 
 # Prevent CI to run concurrently
+# As this workflow runs Terragrunt, it would create lock states
 concurrency:
   group: ci-${{ github.head_ref || github.run_id }}
+  # Disable canceling workflows as this would also create locks
   cancel-in-progress: false
 
 permissions:
@@ -18,12 +20,19 @@ permissions:
 
 jobs:
   validate:
+    # Runs the pre-commit checks  (see `.pre-commit-config.yaml`)
+    # and runs `terragrunt plan` to ensure the IaC configuration is valid
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      # A composite action that sets up GH actions to run TG:
+      # - Loads deploy keys to enable TG to pull private repositories
+      # - Auth GH actions with GCP using Workflow Identity Federation
+      # - Install the gcloud CLI
+      # - Runs Mise to install all the tools we need (Terragrunt, OpenTofu, Go, ...)
       - uses: ./.github/actions/setup
         with:
           deploy-keys: ${{ secrets.DEPLOY_KEY_TG_CATALOG }}
@@ -31,7 +40,14 @@ jobs:
           wif-provider: ${{ secrets.WIF_PROVIDER }}
           wif-service-account: ${{ secrets.WIF_SERVICE_ACCOUNT }}
 
-      # Generates the `vpc_gce` stack and runs plan
+      - name: Install pre-commit
+        run: pip install pre-commit
+
+      # Runs the checks as in pre-commits (tflint, ...)
+      # This prevents any discrepancies between the pre-commit checks and the CI checks 
+      - name: Run pre-commit hooks
+        uses: pre-commit/action@v3.0.1
+
       - name: Run Terragrunt stack generate and plan
         run: |
           cd examples/stacks/vpc_gce
@@ -39,6 +55,8 @@ jobs:
           terragrunt stack run plan --backend-bootstrap --non-interactive
 
   terratest:
+    # Runs Terratest to deploy the infrastructure in a separated environment
+    # Performs some tests and then destroy the infra.
     needs: validate
     runs-on: ubuntu-latest
 
@@ -72,6 +90,11 @@ jobs:
         if: steps.check-label.outputs.label_present == 'false'
         run: exit 1
 
+      # A composite action that sets up GH actions to run TG:
+      # - Loads deploy keys to enable TG to pull private repositories
+      # - Auth GH actions with GCP using Workflow Identity Federation
+      # - Install the gcloud CLI
+      # - Runs Mise to install all the tools we need (Terragrunt, OpenTofu, Go, ...)
       - uses: ./.github/actions/setup
         with:
           deploy-keys: ${{ secrets.DEPLOY_KEY_TG_CATALOG }}
@@ -79,7 +102,5 @@ jobs:
           wif-provider: ${{ secrets.WIF_PROVIDER }}
           wif-service-account: ${{ secrets.WIF_SERVICE_ACCOUNT }}
 
-      # Tests that the infrastructure can deploy properly
-      # It destroys it automatically
       - name: Run Terratest
         run: go test -v ./tests/... -timeout 30m
