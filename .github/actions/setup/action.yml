@@ -1,15 +1,15 @@
-name: 'Common Setup'
-description: 'Common setup steps for Terragrunt CI workflows'
+name: 'Setup to run Terragrunt'
+description: 'A composite action to setup all the required resources to run Terragrunt in GCP'
 
 inputs:
   deploy-keys:
-    description: 'SSH private keys for deploy key access (can be multiple keys separated by newlines)'
+    description: 'SSH private keys secret names (i.e DEPLOY_KEY) for deploy key access (can be multiple keys separated by newlines)'
     required: true
   project-id:
     description: 'GCP project ID'
     required: true
   wif-provider:
-    description: 'Workload Identity Federation provider'
+    description: 'Name of the Workload Identity Federation provider'
     required: true
   wif-service-account:
     description: 'Workload Identity Federation service account'
@@ -18,15 +18,12 @@ inputs:
 runs:
   using: 'composite'
   steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
-
     # Use deploy key for Terragrunt to pull private repositories
     - uses: webfactory/ssh-agent@v0.9.0
       with:
         ssh-private-key: ${{ inputs.deploy-keys }}
 
-    # Use Workflow Identity Federation to authenticate GitHub Actions with Google
+    # Use Workflow Identity Federation to authenticate GitHub Actions with Google.
     # Terragrunt needs permissions from GCP to run plan and apply
     - uses: 'google-github-actions/auth@v2'
       with:
@@ -34,7 +31,6 @@ runs:
         workload_identity_provider: ${{ inputs.wif-provider }}
         service_account: ${{ inputs.wif-service-account }}
 
-    # Install the gcloud SDK
     - name: 'Set up Cloud SDK'
       uses: 'google-github-actions/setup-gcloud@v2'
 
