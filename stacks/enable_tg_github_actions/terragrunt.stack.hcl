@@ -4,6 +4,7 @@ unit "apis" {
 
   values = {
     version = values.version
+    apis    = values.apis
   }
 }
 
