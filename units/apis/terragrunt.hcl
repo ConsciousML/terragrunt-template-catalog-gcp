@@ -10,6 +10,10 @@ inputs = {
   apis = values.apis
 }
 
+# Using prevent destroy and exclude from destroy because
+# APIs take time to be re-enabled. When running destroy in
+# dev or staging environment (when running Terratest)
+# other deployment fail due the the wait time
 prevent_destroy = true
 
 exclude {
