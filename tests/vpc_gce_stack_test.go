@@ -10,6 +10,7 @@ import (
 func TestLocalStack(t *testing.T) {
     t.Parallel()
 
+    // Relative path containing the Terragrunt Stack to test
     stackDir := "../examples/stacks/vpc_gce"
 
     // Ensure destroy runs at the end, even if the test fails
@@ -23,7 +24,6 @@ func TestLocalStack(t *testing.T) {
         require.NoError(t, err, "stack run destroy failed: %s", string(out))
     })
     
-    // Generate
     t.Log("Running: terragrunt stack generate...")
     cmdGenerate := exec.Command("terragrunt", "stack", "generate")
     cmdGenerate.Dir = stackDir
@@ -32,7 +32,6 @@ func TestLocalStack(t *testing.T) {
     t.Logf("Generate output:\n%s", string(out))
     require.NoError(t, err, "stack generate failed: %s", string(out))
 
-    // Apply
     t.Log("Running: terragrunt stack run apply...")
     cmdApply := exec.Command("terragrunt", "--non-interactive", "stack", "run", "apply", "--backend-bootstrap")
     cmdApply.Dir = stackDir

@@ -16,6 +16,7 @@ dependency "apis" {
   skip_outputs = true
 }
 
+# Depends on VPC to add the GCE instance to the private network
 dependency "vpc" {
   config_path = "../vpc"
   mock_outputs = {

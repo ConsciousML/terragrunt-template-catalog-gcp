@@ -6,6 +6,8 @@ terraform {
   source = "git::git@github.com:ConsciousML/terragrunt-template-catalog-gcp.git//modules/github_secrets/?ref=${values.version}"
 }
 
+# Depends on the WIF unit to upload the necessary information
+# as GitHub secrets for GitHub Actions to auth to GCP a run Terraform
 dependency "workload_identity_federation" {
   config_path = "../workload_identity_federation"
   mock_outputs = {
