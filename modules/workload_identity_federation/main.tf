@@ -1,4 +1,4 @@
-# Create the container responsible to manage non-GCP entities
+# A Workload Identity Pool manages the access of non-GCP entities
 resource "google_iam_workload_identity_pool" "github_pool" {
   project                   = var.project
   workload_identity_pool_id = var.workload_identity_pool_id
@@ -6,7 +6,8 @@ resource "google_iam_workload_identity_pool" "github_pool" {
   description               = var.description
 }
 
-# Configure the WIP
+# A Workload Identity Pool Provider is an entity that describes a relationship between Google Cloud and your identity provider
+# In this case, the identity provider is GitHub
 resource "google_iam_workload_identity_pool_provider" "github" {
   project = var.project
 
@@ -34,19 +35,21 @@ resource "google_iam_workload_identity_pool_provider" "github" {
   attribute_condition = "assertion.repository == \"${var.github_username}/${var.github_repo_name}\""
 }
 
-# Create a service account dedicated for GitHub Workflows
+# Create a service account dedicated for GitHub Actions
 resource "google_service_account" "github_actions" {
   account_id   = var.service_account_id
   display_name = var.service_account_display_name
   description  = var.service_account_description
 }
 
+# Mandatory role for WIF to function
 resource "google_service_account_iam_member" "workload_identity_user" {
   service_account_id = google_service_account.github_actions.name
   role               = "roles/iam.workloadIdentityUser"
   member             = "principalSet://iam.googleapis.com/${google_iam_workload_identity_pool.github_pool.name}/attribute.repository/${var.github_username}/${var.github_repo_name}"
 }
 
+# Roles your GitHub Actions workflow need to perform their task
 resource "google_project_iam_member" "additional_roles" {
   for_each = toset(var.iam_roles)
 
