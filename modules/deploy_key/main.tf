@@ -1,3 +1,4 @@
+# Create SSH keys
 resource "tls_private_key" "deploy_key" {
   for_each = toset(var.repositories)
 
@@ -5,6 +6,7 @@ resource "tls_private_key" "deploy_key" {
   rsa_bits  = 4096
 }
 
+# Add each SSH key as deploy key for each repository
 resource "github_repository_deploy_key" "deploy_key" {
   for_each = toset(var.repositories)
 
@@ -14,6 +16,8 @@ resource "github_repository_deploy_key" "deploy_key" {
   read_only  = true
 }
 
+# Add the private key of each deploy key to the current repository
+# i.e where GH Actions will run
 resource "github_actions_secret" "deploy_key" {
   count = length(var.repositories)
 
