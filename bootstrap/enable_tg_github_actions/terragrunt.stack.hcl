@@ -1,4 +1,5 @@
 locals {
+  # Sets the reference of the source code to:
   version = coalesce(
     get_env("GITHUB_HEAD_REF", ""), # PR branch name (only set in PRs)
     get_env("GITHUB_REF_NAME", ""), # Branch/tag name
@@ -12,11 +13,10 @@ stack "enable_tg_github_actions" {
   path   = "enable_tg_github_actions"
 
   values = {
-    # Change these values
     github_username    = "ConsciousML"
     current_repository = "terragrunt-template-catalog-gcp"
 
-    # Set github_token via environment variable 
+    # Set github_token via environment variable to use the GitHub TF provider
     github_token = get_env("TF_VAR_github_token")
 
     version = local.version
@@ -36,6 +36,14 @@ stack "enable_tg_github_actions" {
       "roles/servicenetworking.networksAdmin", # Create private service connections
       "roles/serviceusage.serviceUsageAdmin",  # Enable/disable GCP APIs
       "roles/iam.serviceAccountUser"           # Use default Compute Engine service account
+    ]
+
+    # APIs required for GitHub Actions
+    apis = [
+      "iam.googleapis.com",
+      "cloudresourcemanager.googleapis.com",
+      "iamcredentials.googleapis.com",
+      "sts.googleapis.com"
     ]
 
     # Deploy key configuration

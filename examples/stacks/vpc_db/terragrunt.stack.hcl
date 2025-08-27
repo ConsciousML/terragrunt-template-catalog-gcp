@@ -1,6 +1,5 @@
 locals {
-  repo_root = get_repo_root()
-
+  # Sets the reference of the source code to:
   version = coalesce(
     get_env("GITHUB_HEAD_REF", ""), # PR branch name (only set in PRs)
     get_env("GITHUB_REF_NAME", ""), # Branch/tag name
@@ -14,7 +13,11 @@ stack "vpc_db" {
   path   = "infrastructure"
 
   values = {
-    version          = local.version
+    version = local.version
+    apis = [
+      "compute.googleapis.com",
+      "servicenetworking.googleapis.com"
+    ]
     network_name     = "vpc"
     subnet_name      = "subnet"
     subnet_cidr      = "10.0.0.0/24"
