@@ -1,19 +1,19 @@
 locals {
-  # Automatically load account-level variables
+  # Load GCP project ID variable
   project_vars = read_terragrunt_config(find_in_parent_folders("project.hcl"))
 
-  # Automatically load region-level variables
+  # Load GCP region variable
   region_vars = read_terragrunt_config(find_in_parent_folders("region.hcl"))
 
-  # Automatically load environment related variables (dev, staging, prod, ...)
+  # Load environment related variables (dev, staging, prod, ...)
   environment_vars = read_terragrunt_config(find_in_parent_folders("environment.hcl"))
 
-  # Extract the variables we need for easy access
   gcp_project = local.project_vars.locals.project
   gcp_region  = local.region_vars.locals.region
   environment = local.environment_vars.locals.environment
 }
 
+# Configure GCS backend for storing Terraform state files
 remote_state {
   backend = "gcs"
   generate = {
@@ -25,7 +25,11 @@ remote_state {
     project  = "${local.gcp_project}"
     location = "eu"
 
+    # The bucket name is suffixed using the env name (i.e `dev`, `staging`, ect.)
+    # This allows to completely isolate states between environments
     bucket = "${local.gcp_project}-tofu-state-${local.environment}"
+
+    # The state file path within the bucket, based on module's relative path to ensure each module has its own isolated state
     prefix = "${path_relative_to_include()}/tofu.tfstate"
     gcs_bucket_labels = {
       owner = "terragrunt"
@@ -68,7 +72,7 @@ catalog {
   ]
 }
 
-# Pass key variables to child configurationsd
+# Pass key variables to child configurations
 inputs = merge(
   local.project_vars.locals,
   local.region_vars.locals,
