@@ -10,13 +10,12 @@ This enables the CI to run properly without managing secrets and GCP service acc
 ## Quick Start
 
 ### Prerequisites
-- Install the [GitHub CLI](https://github.com/cli/cli#installation)
-- Install the [Gcloud CLI](https://cloud.google.com/sdk/docs/install)
+- Follow the [installation instructions](../README.md#installation):
 - GCP project with billing enabled
 - GCP IAM permissions to create service accounts and workload identity pools
 
 ### Configuration
-
+In `bootstrap/` change `region.hcl` and `project.hcl` to match your GCP settings.
 Update the following values in `terragrunt.stack.hcl`:
 
 ```hcl
