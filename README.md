@@ -23,7 +23,7 @@ Modules (modules/) → Units (units/) → Stacks (stacks/) → Examples (example
 - **[Stacks](stacks/README.md)**: Collections of units arranged in dependency graphs for pattern level re-use
 - **[Examples](examples/README.md)**: Simple configuration for testing and development
 - **[Bootstrap](bootstrap/README.md)**: GitHub Actions GCP authentication setup
-- **[CI/CD](docs/continuous-integration.md)**: Automated validation and testing workflows
+- **[CI](docs/continuous-integration.md)**: Automated configuration validation, testing (`terratest`) and documatentation (`terraform-docs`).
 
 ## Getting Started
 

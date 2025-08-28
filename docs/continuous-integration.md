@@ -8,7 +8,7 @@ It ensures code quality and that the infrastructure can be deployed an destroyed
 
 ## How It Works
 
-The [CI](../.github/workflows/ci.yaml) consists of two main jobs:
+The [CI](../.github/workflows/ci.yaml) consists of three main jobs:
 
 ### 1. Code Quality Checks
 Runs automatically on every PR:
@@ -26,8 +26,12 @@ Runs when the `run-terratest` label is added to a PR:
 - **Testing**: Runs Go to validate deployed infrastructure
 - **Cleanup**: Automatically destroys test resources
 
-## Setup
+### 3. Documentation Generation
+Uses `terraform-docs` to automatically generate `README.md` in each terraform module in `modules/`.
 
+If authoring new Terraform modules in `modules/`, read the [documentation instructions](../modules/README.md#documentation)
+
+## Setup
 ### Initial Setup
 Follow the [bootstrap guide](../bootstrap/README.md) to:
 - Configure GitHub Actions authentication with GCP
