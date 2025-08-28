@@ -19,7 +19,7 @@ permissions:
   pull-requests: write
 
 jobs:
-  validate:
+  code-quality-checks:
     # Runs the pre-commit checks  (see `.pre-commit-config.yaml`)
     # and runs `terragrunt plan` to ensure the IaC configuration is valid
     runs-on: ubuntu-latest
@@ -57,7 +57,7 @@ jobs:
   terratest:
     # Runs Terratest to deploy the infrastructure in a separated environment
     # Performs some tests and then destroy the infra.
-    needs: validate
+    needs: code-quality-checks
     runs-on: ubuntu-latest
 
     steps:
