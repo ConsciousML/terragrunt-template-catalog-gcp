@@ -1,4 +1,4 @@
-# Development Workflow 
+# Development Workflow
 
 This guide walks you through the complete development workflow for adding new infrastructure modules to the Terragrunt Template Catalog for GCP.
 
