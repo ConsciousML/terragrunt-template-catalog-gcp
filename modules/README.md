@@ -21,9 +21,8 @@ Each module in this directory:
 Modules are not used directly as in native Terraform setups.
 Read the [developement guide](../docs/development.md).
 
-## Documentation Generation
-
-Module documentation is automatically generated using [terraform-docs](https://terraform-docs.io/) during CI. Each module's README.md is created from:
+## Documentation 
+All Terraform modules have a `README.md` automatically generated using [terraform-docs](https://terraform-docs.io/) during CI. Each module's README.md is created from:
 
 - `header.md` - Module title and description
 - Generated terraform-docs content (requirements, providers, resources, inputs, outputs)  
