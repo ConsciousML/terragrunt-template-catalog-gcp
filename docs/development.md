@@ -25,6 +25,10 @@ Create your infrastructure module in `modules/your_module/` with the standard Te
 - `variables.tf`: Input variables with detailed descriptions
 - `output.tf`: Output values (if needed)
 - `providers.tf`: Provider requirements
+- `header.md`: Header documentation for `terraform-docs`.
+- `footer.md`: Footer documentation for `terraform-docs`.
+
+Read the [instructions](../modules/README.md#documentation) to learn more on documentation generation with `terraform-docs`.
 
 ### 3. Create a Terragrunt Unit Wrapper
 Write a terragrunt wrapper in `units/your_module/terragrunt.hcl` that:
