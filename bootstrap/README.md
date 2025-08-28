@@ -88,12 +88,8 @@ If using multiple deploy keys:
       ${{ secrets.DEPLOY_KEY_SECRET_NAME_2 }}
 ```
 
-### Run the CI
-
-1. Create a branch
-2. Commit some changes
-3. Create a PR
-4. The `CI` workflow will run automatically
+### Using the CI
+Read the [continuous integration guide](../docs/continuous-integration.md#using-the-ci).
 
 ## Troubleshoot
 If you face an error:

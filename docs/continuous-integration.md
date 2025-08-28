@@ -12,18 +12,18 @@ The [CI](../.github/workflows/ci.yaml) consists of two main jobs:
 
 ### 1. Code Quality Checks
 Runs automatically on every PR:
-- **Format validation**: Ensures Terragrunt and Terraform files are properly formatted
+- **Format validation**: Ensures Terragrunt (TG) and Terraform (TF) files are properly formatted
 - **Linting**: Validates configuration syntax and best practices with TFLint
 - **Security scanning**: Checks for security issues and vulnerabilities with TFSec
-- **Terragrunt validation**: Ensures configurations are syntactically correct
-- **Plan generation**: Verifies infrastructure changes without applying them
+- **Terragrunt validation**: Ensures the TF and TG files have valid syntax
+- **Plan**: Verifies infrastructure changes without applying them
 
-**Note**: Read the [pre-commit configuration](../.pre-commit-config.yaml) to learn about the run checks.
+**Note**: Read the [pre-commit configuration](../.pre-commit-config.yaml) to learn more about the run checks.
 
 ### 2. Terratest
 Runs when the `run-terratest` label is added to a PR:
 - **Infrastructure deployment**: Creates actual GCP resources in a test environment
-- **Testing**: Runs Go tests to validate deployed infrastructure
+- **Testing**: Runs Go to validate deployed infrastructure
 - **Cleanup**: Automatically destroys test resources
 
 ## Setup
