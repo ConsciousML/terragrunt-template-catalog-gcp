@@ -17,7 +17,3 @@ To be able to run pre-commits, run:
 ```bash
 pre-commit install
 ```
-
-## CI
-Explain CI here
-
