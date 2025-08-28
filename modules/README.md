@@ -18,9 +18,5 @@ Each module in this directory:
 
 ## How are Modules Used?
 
-Modules are not used directly. Instead:
-
-1. **Modules** declare Terraform resources
-2. **Units** wrap modules to be used with Terragrunt (see [units directory](../units/))
-3. **Stacks** assemble units together (see [stacks directory](../stacks/))
-4. **Examples** test the stacks (see [examples directory](../examples/))
+Modules are not used directly as in native Terraform setups.
+Read the [developement guide](../docs/development.md).

@@ -12,10 +12,10 @@ For production deployments, use the [terragrunt-template-live-gcp](https://githu
 
 The examples directory uses the same configuration pattern as the production template:
 
-- `environment.hcl` - Environment name (e.g., "example-2") used for resource naming and state isolation
-- `project.hcl` - GCP project ID where resources will be deployed  
-- `region.hcl` - Default GCP region for resources
-- `root.hcl` - Root configuration that loads variables, configures GCS backend, and sets up providers
+- `environment.hcl`: Environment name (e.g., "example-2") used for resource naming and state isolation
+- `project.hcl`: GCP project ID where resources will be deployed  
+- `region.hcl`: Default GCP region for resources
+- `root.hcl`" Root configuration that loads variables, configures GCS backend, and sets up providers
 
 These files automatically provide GCP variables (project, region, environment) to all stacks, eliminating the need to configure them individually.
 
@@ -41,35 +41,31 @@ This allows testing catalog changes from any branch without manual configuration
 ## Getting Started
 
 ### Prerequisites
-- Terragrunt installed
-- Authenticated with GCP (`gcloud auth application-default login`)
-- Update configuration files with your GCP project and preferred settings
+- Follow the [installation instructions](../README.md#installation):
+- GCP project with billing enabled
+- GCP [IAM permissions](../bootstrap/enable_tg_github_actions/terragrunt.stack.hcl)
 
 ### Deploy a Stack
 ```bash
-# Navigate to the stack directory
 cd examples/stacks/vpc_db
 
 # Generate Terragrunt configuration  
 terragrunt stack generate
 
-# Deploy the stack
 terragrunt stack run apply
 ```
 
 ### Destroy a Stack
 ```bash
-# From the same stack directory
 cd examples/stacks/vpc_db
 
-# Destroy all resources
 terragrunt stack run destroy
 ```
 
 ## Available Example Stacks
 
-- `vpc_db/` - VPC with Cloud SQL PostgreSQL database
-- `vpc_gce/` - VPC with Google Compute Engine instance
+- `vpc_db/`: VPC with Cloud SQL PostgreSQL database
+- `vpc_gce/`: VPC with Google Compute Engine instance
 
 Each stack includes example values that can be modified for testing different configurations.
 

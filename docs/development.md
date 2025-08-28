@@ -12,6 +12,7 @@ The development process follows a structured approach with four main layers:
 4. **Example Implementation** (`examples/`): Concrete usage examples for testing
 
 ## Step-by-Step Development Process
+Read the step-by-step process and then read the [practical example](#practical-example).
 
 ### 1. Create a Feature Branch
 ```bash
@@ -80,7 +81,7 @@ Once your stack works correctly, create a PR and merge it to `main`.
 
 ## Practical Example
 
-Here's how the GCE module was developed following the workflow:
+Here's how the GCE module was developed and integrated in the `vpc_gce` stack by following the workflow:
 
 ### 1. Terraform Module → [modules/gce/](../modules/gce/)
 Created the base infrastructure code with [main.tf](../modules/gce/main.tf), [variables.tf](../modules/gce/variables.tf), [providers.tf](../modules/gce/providers.tf) and [output.tf](../modules/gce/output.tf)
