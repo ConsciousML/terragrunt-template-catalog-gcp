@@ -1,5 +1,10 @@
 # Terragrunt Template Catalog for GCP
 
+[![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+[![GitHub Release](https://img.shields.io/github/release/ConsciousML/terragrunt-template-catalog-gcp.svg?style=flat)]()
+[![CI](https://github.com/ConsciousML/terragrunt-template-catalog-gcp/actions/workflows/ci.yaml/badge.svg)](https://github.com/ConsciousML/terragrunt-template-catalog-gcp/actions/workflows/ci.yaml)
+[![PR's Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat)](http://makeapullrequest.com)
+
 A Terragrunt Template Catalog for production Infrastructure as Code (IaC) on Google Cloud Platform (GCP).
 
 ## Catalog vs Live Infrastructure
