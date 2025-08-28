@@ -1,7 +1,7 @@
 # Test Terragrunt Stacks With Terratest
 
 ## Installation
-Follow the [Go installation instructions](https://go.dev/doc/install):
+Follow the [installation instructions](../README.md#installation):
 
 ## Write a test
 Copy `tests/vpc_db_stack_test.go` in the `test` directory. Use the suffix `*_test.go`.

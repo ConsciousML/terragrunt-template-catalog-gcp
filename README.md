@@ -87,7 +87,7 @@ terragrunt stack run destroy --non-interactive
 4. Create pull request
 5. Merge when CI passes
 
-See [Development Guide](docs/development.md) for detailed workflow.
+See the [development guide](docs/development.md) for a detailed workflow with a step-by-step example on how to modify this template.
 
 ## Continuous Integration (CI)
 
@@ -96,10 +96,16 @@ After creating your repository from this template, run the [bootstrap process](b
 The CI provides automated checks and testing:
 1. Create a branch and make changes
 2. Open a pull request to trigger code quality checks
-3. Add `run-terratest` label for full infrastructure testing
+3. Add the `run-terratest` label for full infrastructure testing
 4. Merge when all checks pass
 
 Read more in our [CI workflow guide](docs/continuous-integration.md).
+
+### Infrastructure Testing
+
+The `run-terratest` label triggers automated infrastructure tests that deploy real GCP resources, validate functionality, and clean up automatically.
+
+See the [testing guide](tests/README.md) for writing custom tests.
 
 ### Pre-commit Setup (recommended)
 ```bash
